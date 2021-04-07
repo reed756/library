@@ -1,4 +1,8 @@
+// BOOK ARRAY //
+
 let myLibrary = [];
+
+// BOOK CONSTRUCTOR //
 
 function Book(title, author, number, read) {
     this.title = title
@@ -10,10 +14,13 @@ function Book(title, author, number, read) {
     }
 }
 
+// BOOK FUNCTION TO ADD BOOK TO ARRAY //
+
 function addBookToLibrary(book) {
     myLibrary.push(book.info());
 }
 
+/*
 const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', '295 pages', 'not read yet');
 const greatGatsby = new Book('The Great Gatsby', 'F. Scott Fitzgerald', '215 pages', 'not read yet');
 const annaKarenina = new Book('Anna Karenina', 'Leo Tolstoy', '864 pages', 'not read yet');
@@ -21,9 +28,11 @@ const annaKarenina = new Book('Anna Karenina', 'Leo Tolstoy', '864 pages', 'not 
 addBookToLibrary(theHobbit);
 addBookToLibrary(greatGatsby);
 addBookToLibrary(annaKarenina);
+*/
+
+// FUNCTION THAT LOOPS THROUGH ARRAY AND ADDS BOOKS TO THE LIST //
 
 let content = document.querySelector(".content");
-let booknew = document.querySelector("#new");
 
     function addBooksToList() {
         for (let i = 0; i < myLibrary.length; i++) {
@@ -33,4 +42,29 @@ let booknew = document.querySelector("#new");
         }
 }
 
-addBooksToList();
+// NEW BOOK FORM //
+
+let booknew = document.querySelector("#new");
+function newBook() {
+    let bookTitle = `${booktitle.value}`;
+    let bookAuthor = `${bookauthor.value}`;
+    let bookPages = `${bookpages.value}`;
+    let bookRead = `${bookread.value}`;
+    let finalBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+    addBookToLibrary(finalBook);
+    addBooksToList();
+    booktitle.value = '';
+    bookauthor.value = '';
+    bookpages.value = '';
+    bookread.value = '';
+}
+
+booknew.addEventListener('click', newBook);
+
+function openForm() {
+    document.getElementById("myForm").style.display = "block";
+}
+  
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
