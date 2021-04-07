@@ -25,10 +25,12 @@ addBookToLibrary(annaKarenina);
 let content = document.querySelector(".content");
 let booknew = document.querySelector("#new");
 
-function addBooksToList() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        let card = document.createElement('div');
-        card.textContent = `${myLibrary[i]}`;
-        content.appendChild(card);
-    }
+    function addBooksToList() {
+        for (let i = 0; i < myLibrary.length; i++) {
+            let card = document.createElement('div');
+            card.textContent = `${myLibrary[i]}`;
+            content.appendChild(card);
+        }
 }
+
+addBooksToList();
