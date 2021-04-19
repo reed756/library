@@ -27,15 +27,13 @@ addBooksToList.prototype = Object.create(Book.prototype)
 // BOOK FUNCTION TO ADD BOOK TO ARRAY //
 
 function addBookToLibrary(book) {
-    for (let i = 0; i <= myLibrary.length; i++) {
-        console.log(book.title);
-        console.log(myLibrary[i]);
-
-        // if (book.title === myLibrary[i].title) {
-        //     continue;
-        // } else {
-        //     return myLibrary.push(book);
-        // }
+    if (myLibrary.length === 0) {
+        return myLibrary.push(book);
+    }
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].title !== book.title) {
+            return myLibrary.push(book);
+        }
     }
 }
 
