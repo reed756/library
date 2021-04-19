@@ -27,47 +27,57 @@ addBooksToList.prototype = Object.create(Book.prototype)
 // BOOK FUNCTION TO ADD BOOK TO ARRAY //
 
 function addBookToLibrary(book) {
-    return myLibrary.push(book);
+    for (let i = 0; i <= myLibrary.length; i++) {
+        console.log(book.title);
+        console.log(myLibrary[i]);
+
+        // if (book.title === myLibrary[i].title) {
+        //     continue;
+        // } else {
+        //     return myLibrary.push(book);
+        // }
+    }
 }
 
 // ADDED SOME BOOKS FOR TESTING //
 
-const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', '295 pages', 'not read');
-const greatGatsby = new Book('The Great Gatsby', 'F. Scott Fitzgerald', '215 pages', 'not read');
-const annaKarenina = new Book('Anna Karenina', 'Leo Tolstoy', '864 pages', 'not read');
+// const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', '295 pages', 'not read');
+// const greatGatsby = new Book('The Great Gatsby', 'F. Scott Fitzgerald', '215 pages', 'not read');
+// const annaKarenina = new Book('Anna Karenina', 'Leo Tolstoy', '864 pages', 'not read');
 
-addBookToLibrary(theHobbit);
-addBookToLibrary(greatGatsby);
-addBookToLibrary(annaKarenina);
+// addBookToLibrary(theHobbit);
+// addBookToLibrary(greatGatsby);
+// addBookToLibrary(annaKarenina);
 
 // FUNCTION THAT LOOPS THROUGH ARRAY AND ADDS BOOKS TO THE LIST //
 
 let content = document.querySelector(".content");
 function addBooksToList() {
-    if (myLibrary.length > 3) {
-        let card = document.createElement('div');
-        let deleteButton = document.createElement("button");
-        let readButton = document.createElement("button");
-        card.textContent = `${myLibrary[myLibrary.length - 1].title} ${myLibrary[myLibrary.length - 1].author} ${myLibrary[myLibrary.length - 1].number} ${myLibrary[myLibrary.length - 1].read}`;
-        card.setAttribute("data", `${myLibrary.length - 1}`);
-        deleteButton.innerText = "DELETE";
-        deleteButton.addEventListener('click', () => {
-            myLibrary.splice(card.attributes.data.value, 1);
-            content.removeChild(card);
-            resetButton();
-        });
-        readButton.innerText = "READ";
-        readButton.addEventListener('click', () => {
-            myLibrary[myLibrary.length - 1].toggle();
-            deleteButton.innerText = "DELETE";
-            readButton.innerText = "READ";
-            card.appendChild(deleteButton);
-            card.appendChild(readButton);
-        });
-        content.appendChild(card);
-        card.appendChild(deleteButton);
-        card.appendChild(readButton);
-    } else {
+    // if (myLibrary.length > 3) {
+    //     let card = document.createElement('div');
+    //     let deleteButton = document.createElement("button");
+    //     let readButton = document.createElement("button");
+    //     card.textContent = `${myLibrary[myLibrary.length - 1].title} ${myLibrary[myLibrary.length - 1].author} ${myLibrary[myLibrary.length - 1].number} ${myLibrary[myLibrary.length - 1].read}`;
+    //     card.setAttribute("data", `${myLibrary.length - 1}`);
+    //     deleteButton.innerText = "DELETE";
+    //     deleteButton.addEventListener('click', () => {
+    //         myLibrary.splice(card.attributes.data.value, 1);
+    //         content.removeChild(card);
+    //         resetButton();
+    //     });
+    //     readButton.innerText = "READ";
+    //     readButton.addEventListener('click', () => {
+    //         myLibrary[myLibrary.length - 1].toggle();
+    //         card.textContent = `${myLibrary[myLibrary.length - 1].title} ${myLibrary[myLibrary.length - 1].author} ${myLibrary[myLibrary.length - 1].number} ${myLibrary[myLibrary.length - 1].read}`;
+    //         deleteButton.innerText = "DELETE";
+    //         readButton.innerText = "READ";
+    //         card.appendChild(deleteButton);
+    //         card.appendChild(readButton);
+    //     });
+    //     content.appendChild(card);
+    //     card.appendChild(deleteButton);
+    //     card.appendChild(readButton);
+    // } else {
     for (let i = 0; i < myLibrary.length; i++) {
         let card = document.createElement('div');
         let deleteButton = document.createElement("button");
@@ -93,8 +103,8 @@ function addBooksToList() {
         card.appendChild(deleteButton);
         card.appendChild(readButton);
     }
-}
-}
+};
+
 
 addBooksToList()
 
