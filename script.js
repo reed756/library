@@ -5,25 +5,32 @@ let myLibrary = [];
 // BOOK CONSTRUCTOR //
 
 function Book(title, author, number, read) {
-    this.title = title
-    this.author = author
-    this.number = number
-    this.read = read
-    this.info = function() {
-        return `${title} by ${author}, ${number}, ${read}`;
+    this.title = title;
+    this.author = author;
+    this.number = number;
+    this.read = read;
+}
+
+// PROTOTYPE //
+
+Book.prototype.toggle = function() {
+    if (this.read !== 'read') {
+        return this.read = 'read';
+    } else {
+        return this.read = 'not read';
     }
 }
 
-Book.prototype.toggle = function() {
-    if (this.read) {
-        this.read = 'read'
-    } else {this.read = 'false'}
-}
+addBookToLibrary.prototype = Object.create(Book.prototype)
+addBooksToList.prototype = Object.create(Book.prototype)
 
 // BOOK FUNCTION TO ADD BOOK TO ARRAY //
+
 function addBookToLibrary(book) {
-    myLibrary.push(book.info());
+    return myLibrary.push(book);
 }
+
+// ADDED SOME BOOKS FOR TESTING //
 
 const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', '295 pages', 'not read');
 const greatGatsby = new Book('The Great Gatsby', 'F. Scott Fitzgerald', '215 pages', 'not read');
@@ -41,7 +48,7 @@ function addBooksToList() {
         let card = document.createElement('div');
         let deleteButton = document.createElement("button");
         let readButton = document.createElement("button");
-        card.textContent = `${myLibrary[myLibrary.length - 1]}`;
+        card.textContent = `${myLibrary[myLibrary.length - 1].title} ${myLibrary[myLibrary.length - 1].author} ${myLibrary[myLibrary.length - 1].number} ${myLibrary[myLibrary.length - 1].read}`;
         card.setAttribute("data", `${myLibrary.length - 1}`);
         deleteButton.innerText = "DELETE";
         deleteButton.addEventListener('click', () => {
@@ -50,6 +57,13 @@ function addBooksToList() {
             resetButton();
         });
         readButton.innerText = "READ";
+        readButton.addEventListener('click', () => {
+            myLibrary[myLibrary.length - 1].toggle();
+            deleteButton.innerText = "DELETE";
+            readButton.innerText = "READ";
+            card.appendChild(deleteButton);
+            card.appendChild(readButton);
+        });
         content.appendChild(card);
         card.appendChild(deleteButton);
         card.appendChild(readButton);
@@ -58,7 +72,7 @@ function addBooksToList() {
         let card = document.createElement('div');
         let deleteButton = document.createElement("button");
         let readButton = document.createElement("button");
-        card.textContent = `${myLibrary[i]}`;
+        card.textContent = `${myLibrary[i].title} ${myLibrary[i].author} ${myLibrary[i].number} ${myLibrary[i].read}`;
         card.setAttribute("data", `${i}`);
         deleteButton.innerText = "DELETE";
         deleteButton.addEventListener('click', () => {
@@ -68,7 +82,12 @@ function addBooksToList() {
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
-            card.toggle();
+            myLibrary[i].toggle();
+            card.textContent = `${myLibrary[i].title} ${myLibrary[i].author} ${myLibrary[i].number} ${myLibrary[i].read}`;
+            deleteButton.innerText = "DELETE";
+            readButton.innerText = "READ";
+            card.appendChild(deleteButton);
+            card.appendChild(readButton);
         });
         content.appendChild(card);
         card.appendChild(deleteButton);
@@ -77,6 +96,10 @@ function addBooksToList() {
 }
 }
 
+addBooksToList()
+
+// FUNCTION THAT RESETS THE DATA ATTRIBUTES WHEN A BOOK IS REMOVED. //
+
 function resetButton() {
     let reset = document.querySelectorAll('div[data]');
     for (i = 0; i < reset.length; i++) {
@@ -84,14 +107,7 @@ function resetButton() {
     }
 }
 
-// let updateThis = document.querySelector('.update');
-// function Update() {
-//     for (let i = 0; i < myLibrary.length; i++) {
-//         updateThis.setAttribute("data", `${i}`);
-//     }
-// }
-
-addBooksToList()
+// ADDS NEW BOOKS TO ARRAY AND TO DISPLAY // 
 
 let booknew = document.querySelector("#new");
     function newBook() {
@@ -106,66 +122,6 @@ let booknew = document.querySelector("#new");
 
 booknew.addEventListener('click', newBook);
 
-// let content = document.querySelector(".content");
-
-/*
-    function addBooksToList() {
-        for (let i = 0; i < myLibrary.length; i++) {
-            let card = document.createElement('div');
-            let deleteButton = document.createElement("button");
-            card.textContent = `${myLibrary[i]}`;
-            deleteButton.innerText = "Delete";
-            content.appendChild(card);
-            card.appendChild(deleteButton);
-        }
-}
-*/
-// function addBookToList() {
-//             let card = document.createElement('div');
-//             let deleteButton = document.createElement("button");
-//             card.textContent = `${myLibrary[myLibrary.length - 1]}`;
-//             deleteButton.innerText = "Delete";
-//             deleteButton.setAttribute("data", `${myLibrary.length - 1}`);
-//             content.appendChild(card);
-//             card.appendChild(deleteButton);
-//         };
-
-// NEW BOOK FORM //
-
-// let booknew = document.querySelector("#new");
-//     function newBook() {
-//         let finalBook = new Book(`${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
-//         addBookToLibrary(finalBook);
-//         addBookToList();
-//         booktitle.value = '';
-//         bookauthor.value = '';
-//         bookpages.value = '';
-//         bookread.value = '';
-// }
-
-// booknew.addEventListener('click', newBook);
-
-// DELETE BOOK FROM ARRAY // 
-
-// let deleteButtons = document.querySelector('[data]');
-//         function deleteFromList() {
-//             console.log('hello');
-//             myLibrary.splice(this.data, 1);
-//     }
-
-// deleteButtons.addEventListener('click', deleteFromList);
-        
-
-// DELETE BOOK FROM LIST //
-/*
-let deleteButtons = document.querySelectorAll('[data]');
-            deleteButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                console.log('hello');
-                myLibrary.splice(button.data, 1);
-            });
-        });
-*/
 // OPEN FORM //
 
 function openForm() {
