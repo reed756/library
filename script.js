@@ -20,26 +20,6 @@ class Book {
     }
 }
 
-// function Book(title, author, number, read) {
-//     this.title = title;
-//     this.author = author;
-//     this.number = number;
-//     this.read = read;
-// }
-
-// // PROTOTYPE //
-
-// Book.prototype.toggle = function() {
-//     if (this.read !== 'read') {
-//         return this.read = 'read';
-//     } else {
-//         return this.read = 'not read';
-//     }
-// }
-
-// addBookToLibrary.prototype = Object.create(Book.prototype)
-// addBooksToList.prototype = Object.create(Book.prototype)
-
 // BOOK FUNCTION TO ADD BOOK TO ARRAY //
 
 function addBookToLibrary(book) {
