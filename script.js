@@ -82,7 +82,7 @@ booknew.addEventListener('click', newBook);
 // OPEN FORM //
 
 function openForm() {
-    document.getElementById("myForm").style.display = "block";
+    document.getElementById("myForm").style.display = "flex";
 }
   
 function closeForm() {

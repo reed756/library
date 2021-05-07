@@ -3,6 +3,10 @@ body {
     margin: -8px;
 }
 
+button, input, form {
+    margin: 5px;
+}
+
 .title {
     display: flex;
     justify-content: center;
@@ -19,13 +23,27 @@ body {
     margin: 5px;
 }
 
-.open-button {
-    font-size: 30px;
+button {
     color: thistle;
     background-color: black;
     border: none;
 }
 
+button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .form-popup {
     display: none;
+    justify-content: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
 }

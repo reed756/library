@@ -14,19 +14,24 @@
 
     <div class="form-popup" id="myForm">
     <form class="form-container">
-        <h1>NEW BOOK FORM</h1>
 
-        <label for="text"><b>Book Title</b></label>
+        <label for="text"><b>Book Title:</b></label>
         <input type="text" placeholder="Enter Book Title" id="booktitle" required>
 
-        <label for="text"><b>Book Author</b></label>
+        <label for="text"><b>Book Author:</b></label>
         <input type="text" placeholder="Enter Book Author" id="bookauthor" required>
 
-        <label for="text"><b>Number Of Pages</b></label>
+        <label for="text"><b>Number Of Pages:</b></label>
         <input type="text" placeholder="Enter Number Of Pages" id="bookpages" required>
 
-        <label for="text"><b>Have You Read It</b></label>
-        <input type="text" placeholder="Enter Have You Read It" id="bookread" required>
+        <label for="text"><b>Have You Read It:</b></label>
+        <select name="Have you read it?" id="bookread">
+            <option value="read">read</option>    
+            <option value="not read">not read</option>
+        </select required>
+
+
+        <!-- <input type="text" placeholder="Enter Have You Read It" id="bookread" required> -->
 
         <button type="button" class="btn" id="new">Add Book</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
@@ -34,7 +39,6 @@
     </div>
     
     <div class="content">
-        <h1>LIST OF BOOKS</h1>
         
     </div>
 
