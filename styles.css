@@ -1,6 +1,7 @@
-body {
+body, html {
     background-color: brown;
-    margin: -8px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 button, input, form {
@@ -45,5 +46,10 @@ button:hover {
 
 .content {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.colour {
+    color: white;
 }

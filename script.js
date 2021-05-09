@@ -35,11 +35,13 @@ function addBooksToList() {
         let card = document.createElement('div');
         card.textContent = `${myLibrary[myLibrary.length - 1].title} ${myLibrary[myLibrary.length - 1].author} ${myLibrary[myLibrary.length - 1].number} ${myLibrary[myLibrary.length - 1].read}`;
         card.setAttribute("data", `${myLibrary.length - 1}`);
+        card.classList.add('colour');
         deleteButton.innerText = "DELETE";
         deleteButton.addEventListener('click', () => {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
             resetButton();
+            setStorage();
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
@@ -49,11 +51,43 @@ function addBooksToList() {
             readButton.innerText = "READ";
             card.appendChild(deleteButton);
             card.appendChild(readButton);
+            setStorage();
         });
         content.appendChild(card);
         card.appendChild(deleteButton);
         card.appendChild(readButton);
 };
+
+function addStorage() {
+    for (let i = 0; i < myLibrary.length; i++) {
+        let deleteButton = document.createElement("button");
+        let readButton = document.createElement("button");
+        let card = document.createElement('div');
+        card.textContent = `${myLibrary[i].title} ${myLibrary[i].author} ${myLibrary[i].number} ${myLibrary[i].read}`;
+        card.setAttribute("data", `${i}`);
+        card.classList.add('colour');
+        deleteButton.innerText = "DELETE";
+        deleteButton.addEventListener('click', () => {
+            myLibrary.splice(card.attributes.data.value, 1);
+            content.removeChild(card);
+            resetButton();
+            setStorage();
+        });
+        readButton.innerText = "READ";
+        readButton.addEventListener('click', () => {
+            myLibrary[card.attributes.data.value].toggle();
+            card.textContent = `${myLibrary[card.attributes.data.value].title} ${myLibrary[card.attributes.data.value].author} ${myLibrary[card.attributes.data.value].number} ${myLibrary[card.attributes.data.value].read}`;
+            deleteButton.innerText = "DELETE";
+            readButton.innerText = "READ";
+            card.appendChild(deleteButton);
+            card.appendChild(readButton);
+            setStorage();
+        });
+        content.appendChild(card);
+        card.appendChild(deleteButton);
+        card.appendChild(readButton);
+    }
+}
 
 // FUNCTION THAT RESETS THE DATA ATTRIBUTES WHEN A BOOK IS REMOVED. //
 
@@ -71,6 +105,7 @@ let booknew = document.querySelector("#new");
         let finalBook = new Book(`${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
         addBookToLibrary(finalBook);
         addBooksToList();
+        setStorage();
         booktitle.value = '';
         bookauthor.value = '';
         bookpages.value = '';
@@ -88,3 +123,24 @@ function openForm() {
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
+
+// ADD TO LOCAL STORAGE //
+
+const setStorage = () => {
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
+
+const getStorage = () => {
+    if (localStorage.myLibrary) {
+    let objects = localStorage.getItem('myLibrary');
+    objects = JSON.parse(objects);
+    for (let i = 0; i < objects.length; i++) {
+        objects[i] = new Book(`${objects[i].title}`, `${objects[i].author}`, `${objects[i].number}`, `${objects[i].read}`);
+    }
+    myLibrary = objects;
+    addStorage();
+    return objects;
+    };
+}
+
+getStorage();
