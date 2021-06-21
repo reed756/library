@@ -25,7 +25,7 @@
         <input type="text" placeholder="Enter Number Of Pages" id="bookpages" required>
 
         <label for="text"><b>Have You Read It:</b></label>
-        <select name="Have you read it?" id="bookread" required>
+        <select name="Have you read it?" id="bookread">
             <option value="read">read</option>    
             <option value="not read">not read</option>
         </select>
@@ -33,7 +33,7 @@
 
         <!-- <input type="text" placeholder="Enter Have You Read It" id="bookread" required> -->
 
-        <button type="submit" class="btn" id="new">Add Book</button>
+        <button type="button" class="btn" id="new">Add Book</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
     </div>
@@ -41,6 +41,7 @@
     <div class="content">
         
     </div>
+    <div class="error"></div>
 
 <script src="script.js"></script>
 </body>

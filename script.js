@@ -93,7 +93,7 @@ function addStorage() {
 
 function resetButton() {
     let reset = document.querySelectorAll('div[data]');
-    for (i = 0; i < reset.length; i++) {
+    for (let i = 0; i < reset.length; i++) {
         reset[i].setAttribute("data", `${i}`);
     }
 }
@@ -101,7 +101,19 @@ function resetButton() {
 // ADDS NEW BOOKS TO ARRAY AND TO DISPLAY // 
 
 let booknew = document.querySelector("#new");
-    function newBook() {
+let title = document.getElementById('booktitle');
+let author = document.getElementById('bookauthor');
+let pages = document.getElementById('bookpages');
+let error = document.querySelector('.error');
+
+function newBook() {
+    // if (showError() === true) {
+    //     return;
+    // }
+    if (title.validity.valueMissing || author.validity.valueMissing || pages.validity.valueMissing) {
+        error.textContent = "Please make sure you fill in the fields for title, author and pages!";
+        return;
+    }
         let finalBook = new Book(`${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
         addBookToLibrary(finalBook);
         addBooksToList();
@@ -110,6 +122,7 @@ let booknew = document.querySelector("#new");
         bookauthor.value = '';
         bookpages.value = '';
         bookread.value = '';
+        error.textContent = "";
 }
 
 booknew.addEventListener('click', newBook);
@@ -123,6 +136,18 @@ function openForm() {
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
+
+// SHOW ERROR
+// let title = document.getElementById('booktitle');
+// let author = document.getElementById('bookauthor');
+// let pages = document.getElementById('bookpages');
+
+// function showError() {
+//     if (title.validity.valueMissing || author.validity.valueMissing || pages.validity.valueMissing) {
+//         content.textContent = "Please4 make sure you fill in the fields for title, author and pages!";
+//         return true;
+//     }
+// }
 
 // ADD TO LOCAL STORAGE //
 
@@ -140,7 +165,7 @@ const getStorage = () => {
     myLibrary = objects;
     addStorage();
     return objects;
-    };
+    }
 }
 
 getStorage();
