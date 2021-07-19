@@ -107,9 +107,6 @@ let pages = document.getElementById('bookpages');
 let error = document.querySelector('.error');
 
 function newBook() {
-    // if (showError() === true) {
-    //     return;
-    // }
     if (title.validity.valueMissing || author.validity.valueMissing || pages.validity.valueMissing) {
         error.textContent = "Please make sure you fill in the fields for title, author and pages!";
         return;
@@ -136,18 +133,6 @@ function openForm() {
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
-
-// SHOW ERROR
-// let title = document.getElementById('booktitle');
-// let author = document.getElementById('bookauthor');
-// let pages = document.getElementById('bookpages');
-
-// function showError() {
-//     if (title.validity.valueMissing || author.validity.valueMissing || pages.validity.valueMissing) {
-//         content.textContent = "Please4 make sure you fill in the fields for title, author and pages!";
-//         return true;
-//     }
-// }
 
 // ADD TO LOCAL STORAGE //
 

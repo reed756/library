@@ -1,3 +1,14 @@
+LIBRARY
+
+DESCRIPTION
+
+Here I created a Library app to keep a list of books you've read/not read as part of The Odin Project Curriculum. I used HTML, CSS, and Javascript for this project and also made use of localstorage for the first time so that the list would save if you refreshed the page on the same device. 
+
+LIVE - https://reed756.github.io/library/
+REPO - https://github.com/reed756/library
+
+INSTRUCTIONS
+
 If you haven’t already, set up your project with skeleton HTML/CSS and JS files.
 All of your book objects are going to be stored in a simple array, so add a function to the script (not the constructor) that can take user’s input and store the new book objects into an array. Your code should look something like this:
 
