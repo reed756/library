@@ -1,3 +1,12 @@
+import { initializeApp } from 'firebase/app';
+
+// TODO: Replace the following with your app's Firebase project configuration
+const firebaseConfig = {
+  //...
+};
+
+const app = initializeApp(firebaseConfig);
+
 // BOOK ARRAY //
 
 let myLibrary = [];
@@ -141,24 +150,24 @@ closedForm.addEventListener('click', closeForm);
 
 // ADD TO LOCAL STORAGE //
 
-const setStorage = () => {
-    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
-}
+// const setStorage = () => {
+//     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+// }
 
-const getStorage = () => {
-    if (localStorage.myLibrary) {
-    let objects = localStorage.getItem('myLibrary');
-    objects = JSON.parse(objects);
-    for (let i = 0; i < objects.length; i++) {
-        objects[i] = new Book(`${objects[i].title}`, `${objects[i].author}`, `${objects[i].number}`, `${objects[i].read}`);
-    }
-    myLibrary = objects;
-    addStorage();
-    return objects;
-    }
-}
+// const getStorage = () => {
+//     if (localStorage.myLibrary) {
+//     let objects = localStorage.getItem('myLibrary');
+//     objects = JSON.parse(objects);
+//     for (let i = 0; i < objects.length; i++) {
+//         objects[i] = new Book(`${objects[i].title}`, `${objects[i].author}`, `${objects[i].number}`, `${objects[i].read}`);
+//     }
+//     myLibrary = objects;
+//     addStorage();
+//     return objects;
+//     }
+// }
 
-getStorage();
+// getStorage();
 
 // FIREBASE //
 
