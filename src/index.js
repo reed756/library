@@ -1,11 +1,33 @@
 import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs, addDoc, } from 'firebase/firestore/lite';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
-  //...
+    apiKey: "AIzaSyDRHQktRyEmP_pc-VP2KaHt4Gt82vZdmpk",
+    authDomain: "library-8dcf1.firebaseapp.com",
+    projectId: "library-8dcf1",
+    storageBucket: "library-8dcf1.appspot.com",
+    messagingSenderId: "505827883321",
+    appId: "1:505827883321:web:66ae53b2d1e6f4dbddd0e8",
+    measurementId: "G-TGSPM7R65E"
 };
 
 const app = initializeApp(firebaseConfig);
+
+async function saveBook(bookText) {
+    // Add a new message entry to the Firebase database.
+    try {
+      await addDoc(collection(getFirestore(), 'books'), {
+        title: bookText.title,
+        author: bookText.author,
+        number: bookText.number,
+        read: bookText.read
+      });
+    }
+    catch(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    }
+  }
 
 // BOOK ARRAY //
 
@@ -118,6 +140,7 @@ let error = document.querySelector('.error');
 function newBook() {
     if (title.validity.valueMissing || author.validity.valueMissing || pages.validity.valueMissing) {
         error.textContent = "Please make sure you fill in the fields for title, author and pages!";
+        setTimeout(function() {error.textContent = ""}, 3000);
         return;
     }
         let finalBook = new Book(`${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
