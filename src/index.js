@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, addDoc, query, onSnapshot, } from 'firebase/firestore/lite';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -27,7 +27,9 @@ async function saveBook(bookText) {
     catch(error) {
       console.error('Error writing new message to Firebase Database', error);
     }
-  }
+}
+
+// Loads chat messages history and listens for upcoming ones.
 
 // BOOK ARRAY //
 
@@ -72,7 +74,7 @@ function addBooksToList() {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
             resetButton();
-            setStorage();
+            // setStorage();
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
@@ -82,7 +84,7 @@ function addBooksToList() {
             readButton.innerText = "READ";
             card.appendChild(deleteButton);
             card.appendChild(readButton);
-            setStorage();
+            // setStorage();
         });
         content.appendChild(card);
         card.appendChild(deleteButton);
@@ -146,7 +148,8 @@ function newBook() {
         let finalBook = new Book(`${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
         addBookToLibrary(finalBook);
         addBooksToList();
-        setStorage();
+        // setStorage();
+        saveBook(finalBook);
         booktitle.value = '';
         bookauthor.value = '';
         bookpages.value = '';
@@ -210,3 +213,14 @@ closedForm.addEventListener('click', closeForm);
 
 // const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
+
+function loadBooks() {
+    // Create the query to load the last 12 messages and listen for new ones.
+    const booksQuery = query(collection(getFirestore(), 'books'));
+    console.log(booksQuery);
+    // Start listening to the query.
+    onSnapshot(booksQuery, function(snapshot) {
+      console.log(snapshot);
+    });
+}
+loadBooks();
