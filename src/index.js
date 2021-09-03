@@ -1,33 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, query, onSnapshot, } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore/lite';
 
 // TODO: Replace the following with your app's Firebase project configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDRHQktRyEmP_pc-VP2KaHt4Gt82vZdmpk",
-    authDomain: "library-8dcf1.firebaseapp.com",
-    projectId: "library-8dcf1",
-    storageBucket: "library-8dcf1.appspot.com",
-    messagingSenderId: "505827883321",
-    appId: "1:505827883321:web:66ae53b2d1e6f4dbddd0e8",
-    measurementId: "G-TGSPM7R65E"
-};
 
-const app = initializeApp(firebaseConfig);
-
-async function saveBook(bookText) {
-    // Add a new message entry to the Firebase database.
-    try {
-      await addDoc(collection(getFirestore(), 'books'), {
-        title: bookText.title,
-        author: bookText.author,
-        number: bookText.number,
-        read: bookText.read
-      });
-    }
-    catch(error) {
-      console.error('Error writing new message to Firebase Database', error);
-    }
-}
+// console.log(booksColl);
 
 // Loads chat messages history and listens for upcoming ones.
 
@@ -100,11 +76,12 @@ function addStorage() {
         card.setAttribute("data", `${i}`);
         card.classList.add('colour');
         deleteButton.innerText = "DELETE";
-        deleteButton.addEventListener('click', () => {
+        deleteButton.addEventListener('click', (event) => {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
             resetButton();
-            setStorage();
+            // setStorage();
+            console.log(event);
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
@@ -114,7 +91,7 @@ function addStorage() {
             readButton.innerText = "READ";
             card.appendChild(deleteButton);
             card.appendChild(readButton);
-            setStorage();
+            // setStorage();
         });
         content.appendChild(card);
         card.appendChild(deleteButton);
@@ -214,13 +191,63 @@ closedForm.addEventListener('click', closeForm);
 // const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-function loadBooks() {
-    // Create the query to load the last 12 messages and listen for new ones.
-    const booksQuery = query(collection(getFirestore(), 'books'));
-    console.log(booksQuery);
-    // Start listening to the query.
-    onSnapshot(booksQuery, function(snapshot) {
-      console.log(snapshot);
-    });
+// function loadBooks() {
+//     // Create the query to load the last 12 messages and listen for new ones.
+//     const booksQuery = query(collection(getFirestore(), 'books'));
+//     console.log(booksQuery);
+//     // // Start listening to the query.
+//     // onSnapshot(booksQuery, function(snapshot) {
+//     //   console.log(snapshot);
+//     // });
+// }
+// loadBooks();
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDRHQktRyEmP_pc-VP2KaHt4Gt82vZdmpk",
+    authDomain: "library-8dcf1.firebaseapp.com",
+    projectId: "library-8dcf1",
+    storageBucket: "library-8dcf1.appspot.com",
+    messagingSenderId: "505827883321",
+    appId: "1:505827883321:web:66ae53b2d1e6f4dbddd0e8",
+    measurementId: "G-TGSPM7R65E"
+};
+
+const app = initializeApp(firebaseConfig);
+
+async function saveBook(bookText) {
+    // Add a new message entry to the Firebase database.
+    try {
+      await addDoc(collection(getFirestore(), 'books'), {
+        title: bookText.title,
+        author: bookText.author,
+        number: bookText.number,
+        read: bookText.read
+      });
+    }
+    catch(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    }
 }
-loadBooks();
+
+const db = getFirestore(app);
+
+async function getBooks(db) {
+    const booksCol = collection(db, 'books');
+    const booksSnapshot = await getDocs(booksCol);
+    const bookList = booksSnapshot.docs.map(doc => doc.data());
+    console.log(bookList);
+    myLibrary = bookList;
+    console.log(myLibrary);
+    addStorage();
+}
+
+getBooks(db);
+
+// const querySnapshot = await getDocs(q);
+// querySnapshot.forEach((doc) => {
+//   // doc.data() is never undefined for query doc snapshots
+//   console.log(doc.id, " => ", doc.data());
+// });
+
+// console.log(querySnapshot);
+// console.log(q);
