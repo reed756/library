@@ -1,11 +1,24 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from 'firebase/firestore/lite';
 
 // TODO: Replace the following with your app's Firebase project configuration
 
 // console.log(booksColl);
 
 // Loads chat messages history and listens for upcoming ones.
+const firebaseConfig = {
+    apiKey: "AIzaSyDRHQktRyEmP_pc-VP2KaHt4Gt82vZdmpk",
+    authDomain: "library-8dcf1.firebaseapp.com",
+    projectId: "library-8dcf1",
+    storageBucket: "library-8dcf1.appspot.com",
+    messagingSenderId: "505827883321",
+    appId: "1:505827883321:web:66ae53b2d1e6f4dbddd0e8",
+    measurementId: "G-TGSPM7R65E"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
 
 // BOOK ARRAY //
 
@@ -14,7 +27,8 @@ let myLibrary = [];
 // BOOK CONSTRUCTOR //
 
 class Book {
-    constructor(title, author, number, read) {
+    constructor(id, title, author, number, read) {
+        this.id = id,
         this.title = title;
         this.author = author;
         this.number = number;
@@ -49,7 +63,6 @@ function addBooksToList() {
         deleteButton.addEventListener('click', () => {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
-            
             resetButton();
         });
         readButton.innerText = "READ";
@@ -74,14 +87,15 @@ function addStorage() {
         let card = document.createElement('div');
         card.textContent = `${myLibrary[i].title} ${myLibrary[i].author} ${myLibrary[i].number} ${myLibrary[i].read}`;
         card.setAttribute("data", `${i}`);
+        card.setAttribute("datafirestore", `${myLibrary[i].id}`);
         card.classList.add('colour');
         deleteButton.innerText = "DELETE";
-        deleteButton.addEventListener('click', (event) => {
+        deleteButton.addEventListener('click', () => {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
             resetButton();
             // setStorage();
-            console.log(event);
+            deleteBooks(card.attributes.datafirestore.value);
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
@@ -203,18 +217,6 @@ closedForm.addEventListener('click', closeForm);
 // }
 // loadBooks();
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDRHQktRyEmP_pc-VP2KaHt4Gt82vZdmpk",
-    authDomain: "library-8dcf1.firebaseapp.com",
-    projectId: "library-8dcf1",
-    storageBucket: "library-8dcf1.appspot.com",
-    messagingSenderId: "505827883321",
-    appId: "1:505827883321:web:66ae53b2d1e6f4dbddd0e8",
-    measurementId: "G-TGSPM7R65E"
-};
-
-const app = initializeApp(firebaseConfig);
-
 async function saveBook(bookText) {
     // Add a new message entry to the Firebase database.
     try {
@@ -230,19 +232,22 @@ async function saveBook(bookText) {
     }
 }
 
-const db = getFirestore(app);
-
 async function getBooks(db) {
     const booksCol = collection(db, 'books');
     const booksSnapshot = await getDocs(booksCol);
-    const bookList = booksSnapshot.docs.map(doc => doc.data());
+    const bookList = booksSnapshot.docs.map(doc => [doc.id, doc.data()]);
+    console.log(bookList);
     for (let i = 0; i < bookList.length; i++) {
-        bookList[i] = new Book(`${bookList[i].title}`, `${bookList[i].author}`, `${bookList[i].number}`, `${bookList[i].read}`);
+        bookList[i] = new Book(bookList[i][0], `${bookList[i][1].title}`, `${bookList[i][1].author}`, `${bookList[i][1].number}`, `${bookList[i][1].read}`);
     }
     myLibrary = bookList;
-    addStorage();
     console.log(myLibrary);
-    // return bookList;
+    addStorage();
+    return bookList;
+}
+
+async function deleteBooks(id) {
+    await deleteDoc(doc(db, "books", id));
 }
 
 getBooks(db);
