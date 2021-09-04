@@ -49,8 +49,8 @@ function addBooksToList() {
         deleteButton.addEventListener('click', () => {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
+            
             resetButton();
-            // setStorage();
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
@@ -60,11 +60,11 @@ function addBooksToList() {
             readButton.innerText = "READ";
             card.appendChild(deleteButton);
             card.appendChild(readButton);
-            // setStorage();
         });
         content.appendChild(card);
         card.appendChild(deleteButton);
         card.appendChild(readButton);
+        console.log(myLibrary);
 };
 
 function addStorage() {
@@ -85,6 +85,7 @@ function addStorage() {
         });
         readButton.innerText = "READ";
         readButton.addEventListener('click', () => {
+            console.log(myLibrary[card.attributes.data.value].read)
             myLibrary[card.attributes.data.value].toggle();
             card.textContent = `${myLibrary[card.attributes.data.value].title} ${myLibrary[card.attributes.data.value].author} ${myLibrary[card.attributes.data.value].number} ${myLibrary[card.attributes.data.value].read}`;
             deleteButton.innerText = "DELETE";
@@ -235,10 +236,13 @@ async function getBooks(db) {
     const booksCol = collection(db, 'books');
     const booksSnapshot = await getDocs(booksCol);
     const bookList = booksSnapshot.docs.map(doc => doc.data());
-    console.log(bookList);
+    for (let i = 0; i < bookList.length; i++) {
+        bookList[i] = new Book(`${bookList[i].title}`, `${bookList[i].author}`, `${bookList[i].number}`, `${bookList[i].read}`);
+    }
     myLibrary = bookList;
-    console.log(myLibrary);
     addStorage();
+    console.log(myLibrary);
+    // return bookList;
 }
 
 getBooks(db);
