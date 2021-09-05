@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, setDoc } from 'firebase/firestore/lite';
 
 // TODO: Replace the following with your app's Firebase project configuration
 
@@ -94,7 +94,6 @@ function addStorage() {
             myLibrary.splice(card.attributes.data.value, 1);
             content.removeChild(card);
             resetButton();
-            // setStorage();
             deleteBooks(card.attributes.datafirestore.value);
         });
         readButton.innerText = "READ";
@@ -106,7 +105,7 @@ function addStorage() {
             readButton.innerText = "READ";
             card.appendChild(deleteButton);
             card.appendChild(readButton);
-            // setStorage();
+            updateBooks(card.attributes.datafirestore.value, myLibrary[card.attributes.data.value].read);
         });
         content.appendChild(card);
         card.appendChild(deleteButton);
@@ -137,7 +136,7 @@ function newBook() {
         setTimeout(function() {error.textContent = ""}, 3000);
         return;
     }
-        let finalBook = new Book(`${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
+        let finalBook = new Book(0, `${booktitle.value}`, `${bookauthor.value}`, `${bookpages.value}`, `${bookread.value}`);
         addBookToLibrary(finalBook);
         addBooksToList();
         // setStorage();
@@ -248,6 +247,11 @@ async function getBooks(db) {
 
 async function deleteBooks(id) {
     await deleteDoc(doc(db, "books", id));
+}
+
+function updateBooks(id, readStatus) {
+    const bookRef = doc(db, 'books', id);
+    setDoc(bookRef, { read: `${readStatus}` }, { merge: true });
 }
 
 getBooks(db);
